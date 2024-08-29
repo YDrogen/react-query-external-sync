@@ -1,7 +1,7 @@
 import { QueryClient } from '@tanstack/react-query';
 import { Query } from '@tanstack/react-query';
 import { deepEqual } from 'fast-equals';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { ClientQuery } from './_types/ClientQuery';
 import useMySocket from './useMySocket';
@@ -24,7 +24,7 @@ export function useAllQueries({ queryClient, query, socketURL }: Props) {
     socketURL,
   });
 
-  const [queries, setQueries] = useState<ExtendedQuery[]>([]);
+  const queries = useRef<ExtendedQuery[]>([]);
 
   // Store the previous data states for comparison
   const prevDataRef = useRef<Array<any>>([]);
@@ -60,7 +60,7 @@ export function useAllQueries({ queryClient, query, socketURL }: Props) {
           } as ExtendedQuery;
         });
 
-        setQueries(allQueries);
+        queries.current = allQueries;
 
         prevDataRef.current = currentDataStates; // Update the ref for future comparison
 
@@ -85,7 +85,7 @@ export function useAllQueries({ queryClient, query, socketURL }: Props) {
   }, [isConnected]);
 
   return {
-    queries,
+    queries: queries.current,
     connect,
     disconnect,
     isConnected,
