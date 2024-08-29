@@ -1,12 +1,14 @@
-import io, { Socket } from "socket.io-client";
-import { User } from "./_types/User";
-import { useEffect, useState } from "react";
-import { QueryClient } from "@tanstack/react-query";
-import { Command } from "./_types/Command";
-import handleCommands from "./_util/handleCommands";
-import { ClientQuery } from "./_types/ClientQuery";
+import { QueryClient } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+import io, { Socket } from 'socket.io-client';
+
+import { ClientQuery } from './_types/ClientQuery';
+import { Command } from './_types/Command';
+import { User } from './_types/User';
+import handleCommands from './_util/handleCommands';
 
 let socket = null as Socket | null; // Module-level variable to store the socket instance
+
 interface Props {
   query: ClientQuery;
   socketURL: string;
@@ -32,18 +34,22 @@ export default function useMySocket({ query, socketURL, queryClient }: Props) {
   function connect() {
     socket?.connect();
   }
+
   function disconnect() {
     socket?.disconnect();
   }
+
   useEffect(() => {
     function onConnect() {
       setIsConnected(true);
     }
+
     function onDisconnect() {
       setIsConnected(false);
     }
+
     // Listen for command messages from the server
-    socket?.on("message", (command: Command) => {
+    socket?.on('message', (command: Command) => {
       // All queries
       const allQueries = queryClient.getQueryCache().findAll();
       handleCommands({
@@ -52,18 +58,21 @@ export default function useMySocket({ query, socketURL, queryClient }: Props) {
         allQueries,
       });
     });
-    socket?.on("connect", onConnect);
-    socket?.on("disconnect", onDisconnect);
-    socket?.on("users-update", (newUsers: User[]) => {
+
+    socket?.on('connect', onConnect);
+    socket?.on('disconnect', onDisconnect);
+    socket?.on('users-update', (newUsers: User[]) => {
       setUsers(newUsers);
     });
+
     // Clean up on unmount
     return () => {
-      socket?.off("connect", onConnect);
-      socket?.off("disconnect", onDisconnect);
-      socket?.off("users-update");
-      socket?.off("message");
+      socket?.off('connect', onConnect);
+      socket?.off('disconnect', onDisconnect);
+      socket?.off('users-update');
+      socket?.off('message');
     };
   }, [socket]);
+
   return { socket, connect, disconnect, isConnected, users };
 }

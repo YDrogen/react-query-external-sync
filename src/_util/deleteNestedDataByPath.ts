@@ -5,10 +5,7 @@
  * @param {Array<string>} deletePath Path to the data to be deleted
  * @returns newData without the deleted items by path
  */
-export const deleteNestedDataByPath = (
-  oldData: unknown,
-  deletePath: Array<string>
-): any => {
+export const deleteNestedDataByPath = (oldData: unknown, deletePath: Array<string>): any => {
   if (oldData instanceof Map) {
     const newData = new Map(oldData);
 

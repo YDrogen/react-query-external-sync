@@ -1,4 +1,5 @@
-import { ExtendedQuery } from "./QueryExternal";
+import { ExtendedQuery } from './QueryExternal';
+
 export interface User {
   id: string;
   clientType: string;

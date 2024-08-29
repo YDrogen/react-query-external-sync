@@ -5,11 +5,7 @@
  * @param {Array<string>} updatePath Path to the data to be updated
  * @param {unknown} value New value
  */
-export const updateNestedDataByPath = (
-  oldData: unknown,
-  updatePath: Array<string>,
-  value: unknown
-): any => {
+export const updateNestedDataByPath = (oldData: unknown, updatePath: Array<string>, value: unknown): any => {
   if (updatePath.length === 0) {
     return value;
   }
@@ -28,11 +24,7 @@ export const updateNestedDataByPath = (
   }
 
   if (oldData instanceof Set) {
-    const setAsArray = updateNestedDataByPath(
-      Array.from(oldData),
-      updatePath,
-      value
-    );
+    const setAsArray = updateNestedDataByPath(Array.from(oldData), updatePath, value);
 
     return new Set(setAsArray);
   }

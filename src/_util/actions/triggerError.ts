@@ -1,4 +1,5 @@
-import { Query, QueryKey, useQueryClient } from "@tanstack/react-query";
+import { Query, QueryKey, useQueryClient } from '@tanstack/react-query';
+
 interface Props {
   queryClient: ReturnType<typeof useQueryClient>;
   query: Query;
@@ -12,17 +13,15 @@ export default function triggerError({ query, queryClient }: Props) {
     if (!query) return;
     const errorTypes: DevToolsErrorType[] = [
       {
-        name: "Network Error",
-        initializer: () => new Error("Network error occurred"),
+        name: 'Network Error',
+        initializer: () => new Error('Network error occurred'),
       },
     ];
-    const error =
-      errorTypes[0]?.initializer(query) ??
-      new Error("Unknown error from devtools");
+    const error = errorTypes[0]?.initializer(query) ?? new Error('Unknown error from devtools');
     const __previousQueryOptions = query.options;
     query.setState({
       ...query.state,
-      status: "error",
+      status: 'error',
       error: error,
       fetchMeta: {
         ...query.state.fetchMeta,
@@ -30,7 +29,7 @@ export default function triggerError({ query, queryClient }: Props) {
       } as any,
     });
   };
-  if (query.state.status !== "error") {
+  if (query.state.status !== 'error') {
     triggerError();
   } else {
     queryClient.resetQueries(query);

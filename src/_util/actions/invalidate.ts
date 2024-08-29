@@ -1,4 +1,4 @@
-import { Query, useQueryClient } from "@tanstack/react-query";
+import { Query, useQueryClient } from '@tanstack/react-query';
 
 interface Props {
   query: Query;

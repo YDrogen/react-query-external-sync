@@ -1,4 +1,4 @@
-import { Query } from "@tanstack/react-query";
+import { Query } from '@tanstack/react-query';
 
 interface Props {
   query: Query;
@@ -7,8 +7,7 @@ export default function triggerLoading({ query }: Props) {
   if (query.state.data === undefined) {
     // --Undefined - We previously triggered 'trigger loading' actiion--
     // Retrieve the original query options stored in fetchMeta
-    const previousQueryOptions = (query.state.fetchMeta as any)
-      .__previousQueryOptions;
+    const previousQueryOptions = (query.state.fetchMeta as any).__previousQueryOptions;
     if (previousQueryOptions) {
       // Refetch the query with the original options
       query.fetch(previousQueryOptions, {
@@ -29,7 +28,7 @@ export default function triggerLoading({ query }: Props) {
     // Set the state to pending and remove data
     query.setState({
       data: undefined,
-      status: "pending",
+      status: 'pending',
       fetchMeta: {
         ...query.state.fetchMeta,
         __previousQueryOptions,

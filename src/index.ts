@@ -1,1 +1,1 @@
-export { useAllQueries, ExtendedQuery } from "./useAllQueries";
+export { useAllQueries, ExtendedQuery } from './useAllQueries';
